@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
                     startDestination = "home"
                 ) {
 
+                    // TODO: Can we extract all the routes to a separate file and maintain constants there?
                     // Home Screen
                     composable("home") {
                         HomeScreen(navController, todoViewModel)

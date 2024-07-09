@@ -29,12 +29,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
+// TODO: Rename the file to be more descriptive
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Details(navController: NavHostController,
-            todoViewModel: TodoViewModel,
-            data: TodoItemDataModel? = null,
-            modifier: Modifier = Modifier) {
+fun Details(
+    navController: NavHostController,
+    todoViewModel: TodoViewModel,
+    data: TodoItemDataModel? = null,
+    modifier: Modifier = Modifier
+) {
     var text by remember { mutableStateOf(TextFieldValue(data?.text ?: "")) }
 
     Scaffold(
@@ -76,8 +79,8 @@ fun Details(navController: NavHostController,
             )
             Spacer(modifier.padding(10.dp))
             Button(modifier = Modifier.fillMaxWidth(),
-                onClick ={
-                    if(data != null){
+                onClick = {
+                    if (data != null) {
                         todoViewModel.update(
                             TodoItemEntity(
                                 id = data.id.toInt(),
@@ -85,8 +88,7 @@ fun Details(navController: NavHostController,
                                 isDone = data.isDone
                             )
                         )
-                    }
-                    else{
+                    } else {
                         todoViewModel.insert(
                             TodoItemEntity(
                                 text = text.text
@@ -95,7 +97,7 @@ fun Details(navController: NavHostController,
                     }
                     navController.navigate("home")
 
-                }){
+                }) {
                 Text("Save")
             }
         }
@@ -103,6 +105,7 @@ fun Details(navController: NavHostController,
 }
 
 
+// TODO: Bring this back
 //@Preview(showBackground = true)
 //@Composable
 //fun DetailsPreview() {

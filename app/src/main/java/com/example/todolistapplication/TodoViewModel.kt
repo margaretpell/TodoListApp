@@ -8,9 +8,12 @@ import kotlinx.coroutines.launch
 
 class TodoViewModel(application: Application) : AndroidViewModel(application){
     private val repository: TodoRepository
+
+    // TODO: Change this to Flows. Hint: SharedFlow
     val allTodoItems: LiveData<List<TodoItemEntity>>
 
     init{
+        // TODO: Extract to a separate function.
         val todoItemDao = TodoDatabase.getDatabase(application).todoItemDao()
         repository = TodoRepository(todoItemDao)
         allTodoItems = repository.allTodoItems

@@ -5,15 +5,27 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
+
+// TODO: Move to database package
 @Database(entities = [TodoItemEntity::class], version = 1)
-abstract class TodoDatabase : RoomDatabase(){
+abstract class TodoDatabase : RoomDatabase() {
     abstract fun todoItemDao(): TodoItemDao
-    companion object{
-        @Volatile private var instance : TodoDatabase? = null
 
-        fun getDatabase(context: Context) : TodoDatabase =
-            instance ?: synchronized(this) {instance ?: builtDatabase(context).also {instance = it}}
+    companion object {
+        @Volatile
+        private var instance: TodoDatabase? = null
 
-        private fun builtDatabase(context: Context) = Room.databaseBuilder(context.applicationContext, TodoDatabase::class.java,"todo_database").build()
+        fun getDatabase(context: Context): TodoDatabase =
+            instance ?: synchronized(this) {
+                instance ?: builtDatabase(context).also {
+                    instance = it
+                }
+            }
+
+        private fun builtDatabase(context: Context) = Room.databaseBuilder(
+            context.applicationContext,
+            TodoDatabase::class.java,
+            "todo_database"
+        ).build()
     }
 }

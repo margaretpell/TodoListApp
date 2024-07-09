@@ -1,4 +1,4 @@
-package com.example.todolistapplication
+package com.example.todolistapplication.db
 
 import android.content.Context
 import androidx.room.Database

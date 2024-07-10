@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
 
                     composable("todo_detail/new") {
                         val viewModel: DetailsScreenViewModel by viewModels()
-                        DetailsScreen(navController, viewModel)
+                        DetailsScreen(navController, viewModel,itemId = null)
                     }
                 }
             }

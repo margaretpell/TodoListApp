@@ -1,4 +1,4 @@
-package com.example.todolistapplication
+package com.example.todolistapplication.details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,12 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.todolistapplication.TodoItemDataModel
+import com.example.todolistapplication.TodoViewModel
 import com.example.todolistapplication.db.TodoItemEntity
 
 // TODO: Rename the file to be more descriptive
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Details(
+fun DetailsScreen(
     navController: NavHostController,
     todoViewModel: TodoViewModel,
     data: TodoItemDataModel? = null,

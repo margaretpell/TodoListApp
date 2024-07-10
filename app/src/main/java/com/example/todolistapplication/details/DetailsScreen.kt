@@ -1,4 +1,4 @@
-package com.example.todolistapplication
+package com.example.todolistapplication.details
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,26 +17,37 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.todolistapplication.db.TodoItemEntity
 
-// TODO: Rename the file to be more descriptive
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Details(
+fun DetailsScreen(
     navController: NavHostController,
-    todoViewModel: TodoViewModel,
-    data: TodoItemDataModel? = null,
-    modifier: Modifier = Modifier
+    viewModel: DetailsScreenViewModel,
+    modifier: Modifier = Modifier,
+    itemId: String? = null,
 ) {
-    var text by remember { mutableStateOf(TextFieldValue(data?.text ?: "")) }
+    val todoItemToDisplay = viewModel.todoItemToDisplay.observeAsState().value
+    var localText by remember { mutableStateOf("") }
+
+    LaunchedEffect(Unit) {
+        if(itemId != null) {
+            viewModel.loadTodoToDisplay(itemId)
+        }
+    }
+
+    LaunchedEffect(todoItemToDisplay) {
+        localText = todoItemToDisplay?.text ?: ""
+    }
 
     Scaffold(
         modifier = modifier,
@@ -70,32 +81,35 @@ fun Details(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                value = text,
+                value = localText,
                 onValueChange = { newText ->
-                    text = newText
+                    localText = newText
                 }
             )
+
             Spacer(modifier.padding(10.dp))
+
             Button(modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    if (data != null) {
-                        todoViewModel.update(
+                    if (todoItemToDisplay != null) {
+                        viewModel.update(
                             TodoItemEntity(
-                                id = data.id.toInt(),
-                                text = text.text,
-                                isDone = data.isDone
+                                id = todoItemToDisplay.id,
+                                text = localText,
+                                isDone = todoItemToDisplay.isDone
                             )
                         )
                     } else {
-                        todoViewModel.insert(
+                        viewModel.insert(
                             TodoItemEntity(
-                                text = text.text
+                                text = localText
                             )
                         )
                     }
-                    navController.navigate("home")
 
-                }) {
+                    navController.popBackStack()
+                }
+            ) {
                 Text("Save")
             }
         }

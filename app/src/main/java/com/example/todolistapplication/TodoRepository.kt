@@ -11,6 +11,16 @@ class TodoRepository(private val todoItemDao: TodoItemDao) {
     // TODO: Don't fetch until asked, create a separate method for this.
     val allTodoItems: LiveData<List<TodoItemEntity>> = todoItemDao.getAll();
 
+    suspend fun getAllTodoItems(): LiveData<List<TodoItemEntity>> {
+        return todoItemDao.getAll();
+    }
+
+    suspend fun getItemById(itemId: String): LiveData<TodoItemEntity> {
+        return todoItemDao.getItemById(itemId.toInt())
+    }
+
+    // TODO: Write query to fetch a single todo item with id.
+
     suspend fun insert(todoItem: TodoItemEntity){
         todoItemDao.insert(todoItem)
     }

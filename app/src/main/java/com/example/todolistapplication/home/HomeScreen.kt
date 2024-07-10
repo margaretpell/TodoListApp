@@ -1,4 +1,4 @@
-package com.example.todolistapplication
+package com.example.todolistapplication.home
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,16 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.example.todolistapplication.TodoItem
+import com.example.todolistapplication.TodoItemDataModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    todoViewModel: TodoViewModel,
+    todoViewModel: HomeScreenViewModel,
     modifier: Modifier = Modifier
 ) {
     val todoItems by todoViewModel.allTodoItems.observeAsState(initial = emptyList())

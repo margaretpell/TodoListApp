@@ -10,6 +10,10 @@ import androidx.room.Update
 // TODO: Move to database package
 @Dao
 interface TodoItemDao {
+
+    @Query("SELECT * FROM todo_items WHERE id=:itemId")
+    fun getItemById(itemId: Int): LiveData<TodoItemEntity>
+
     @Query("SELECT * FROM todo_items")
     fun getAll(): LiveData<List<TodoItemEntity>>
 

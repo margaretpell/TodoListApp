@@ -5,18 +5,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.todolistapplication.details.DetailsScreen
+import com.example.todolistapplication.details.DetailsScreenViewModel
 import com.example.todolistapplication.home.HomeScreen
 import com.example.todolistapplication.home.HomeScreenViewModel
 import com.example.todolistapplication.ui.theme.TodoListApplicationTheme
 
 class MainActivity : ComponentActivity() {
-    // TODO: Remove this.
-    private val todoViewModel: TodoViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = "home"
                 ) {
-
                     // TODO: Can we extract all the routes to a separate file and maintain constants there?
                     // Home Screen
                     composable("home") {
@@ -37,23 +36,24 @@ class MainActivity : ComponentActivity() {
                     }
 
                     // Details Screen
-                    composable("todo_detail/{itemId}") { backStackEntry ->
+                    composable(
+                        "todo_detail/{itemId}",
+                        arguments = listOf(navArgument("itemId") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val viewModel: DetailsScreenViewModel by viewModels()
                         val itemId = backStackEntry.arguments?.getString("itemId")
-                        val item =
-                            todoViewModel.allTodoItems.value?.find { it.id.toString() == itemId }
-                        if (item == null) {
-                            navController.navigate("home")
-                        } else {
-                            DetailsScreen(
-                                navController,
-                                todoViewModel,
-                                TodoItemDataModel(item.id.toString(), item.text, item.isDone)
-                            )
-                        }
+
+                        DetailsScreen(
+                            navController,
+                            viewModel,
+                            itemId = itemId
+                        )
+
                     }
 
                     composable("todo_detail/new") {
-                        DetailsScreen(navController, todoViewModel, null)
+                        val viewModel: DetailsScreenViewModel by viewModels()
+                        DetailsScreen(navController, viewModel)
                     }
                 }
             }

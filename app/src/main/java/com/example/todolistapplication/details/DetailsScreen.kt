@@ -24,8 +24,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.todolistapplication.db.TodoItemEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +48,10 @@ fun DetailsScreen(
     }
 
     LaunchedEffect(todoItemToDisplay) {
-        localText = todoItemToDisplay?.text ?: ""
+        // If item id is not null, that means it is update case, not add.
+        if(itemId != null) {
+            localText = todoItemToDisplay?.text ?: ""
+        }
     }
 
     Scaffold(
@@ -118,13 +123,3 @@ fun DetailsScreen(
 
 
 // TODO: Bring this back
-//@Preview(showBackground = true)
-//@Composable
-//fun DetailsPreview() {
-//    val navController = rememberNavController()
-//    Details(navController, data = TodoItemDataModel(
-//        id = "5",
-//        text = "Hiiiiii",
-//        isDone = false
-//    ))
-//}

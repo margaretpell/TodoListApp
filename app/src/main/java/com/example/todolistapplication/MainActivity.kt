@@ -26,18 +26,18 @@ class MainActivity : ComponentActivity() {
             TodoListApplicationTheme {
                 NavHost(
                     navController = navController,
-                    startDestination = "home"
+                    startDestination = NavRoutes.HOME
                 ) {
                     // TODO: Can we extract all the routes to a separate file and maintain constants there?
                     // Home Screen
-                    composable("home") {
+                    composable(NavRoutes.HOME) {
                         val homeScreenViewModel: HomeScreenViewModel by viewModels()
                         HomeScreen(navController, homeScreenViewModel)
                     }
 
                     // Details Screen
                     composable(
-                        "todo_detail/{itemId}",
+                        NavRoutes.TODO_DETAILS,
                         arguments = listOf(navArgument("itemId") { type = NavType.StringType })
                     ) { backStackEntry ->
                         val viewModel: DetailsScreenViewModel by viewModels()
@@ -51,9 +51,9 @@ class MainActivity : ComponentActivity() {
 
                     }
 
-                    composable("todo_detail/new") {
+                    composable(NavRoutes.TODO_DETAILS_NEW) {
                         val viewModel: DetailsScreenViewModel by viewModels()
-                        DetailsScreen(navController, viewModel,itemId = null)
+                        DetailsScreen(navController, viewModel, itemId = null)
                     }
                 }
             }

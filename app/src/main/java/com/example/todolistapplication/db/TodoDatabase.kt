@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-// TODO: Move to database package
+
 @Database(entities = [TodoItemEntity::class], version = 1)
 abstract class TodoDatabase : RoomDatabase() {
     abstract fun todoItemDao(): TodoItemDao

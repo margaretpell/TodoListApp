@@ -12,7 +12,7 @@ class TodoRepository(private val todoItemDao: TodoItemDao) {
     val allTodoItems: LiveData<List<TodoItemEntity>> = todoItemDao.getAll();
 
     suspend fun getAllTodoItems(): LiveData<List<TodoItemEntity>> {
-        return todoItemDao.getAll();
+        return todoItemDao.getAll()
     }
 
     suspend fun getItemById(itemId: String): LiveData<TodoItemEntity> {

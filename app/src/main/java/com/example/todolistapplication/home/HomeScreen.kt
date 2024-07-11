@@ -64,9 +64,7 @@ fun HomeScreen(
                     onUpdate = {navController.navigate("todo_detail/${item.id}")},
                     onRemove = {todoViewModel.delete(it)}
                 )
-
             }
-
         }
     }
 }

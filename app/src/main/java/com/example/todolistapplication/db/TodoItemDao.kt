@@ -17,7 +17,6 @@ interface TodoItemDao {
     @Query("SELECT * FROM todo_items")
     fun getAll(): LiveData<List<TodoItemEntity>>
 
-    // TODO: Write query to fetch a single todo item with id.
 
     @Insert
     suspend fun insert(todoItem: TodoItemEntity)

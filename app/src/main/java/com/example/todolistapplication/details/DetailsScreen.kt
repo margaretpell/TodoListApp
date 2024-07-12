@@ -123,5 +123,70 @@ fun DetailsScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailsScreenContent(
+    navController: NavHostController,
+    initialText: String,
+    modifier: Modifier = Modifier,
+) {
+    var localText by remember { mutableStateOf(initialText) }
 
-// TODO: Bring this back
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Description")
+                },
+                navigationIcon = {
+                    IconButton(
+                        onClick = {
+                            navController.navigate("home")
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Navigate Back"
+                        )
+                    }
+                },
+            )
+        }
+    ) { contentPadding ->
+        Column(
+            modifier = Modifier
+                .padding(contentPadding)
+                .fillMaxSize()
+                .padding(12.dp)
+        ) {
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                value = localText,
+                onValueChange = { newText ->
+                    localText = newText
+                }
+            )
+
+            Spacer(modifier.padding(10.dp))
+
+            Button(modifier = Modifier.fillMaxWidth(),
+                onClick = { }
+            ) {
+                Text("Save")
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DetailsScreenPreview(){
+    val navController = rememberNavController()
+    DetailsScreenContent(
+        navController = navController,
+        initialText = "Sample Item")
+}

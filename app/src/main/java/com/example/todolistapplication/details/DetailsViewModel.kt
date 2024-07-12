@@ -17,12 +17,10 @@ import kotlinx.coroutines.launch
 class DetailsScreenViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: TodoRepository
 
-    // TODO: Change this to Flows. Hint: SharedFlow(addressed)
     private val _todoItemToDisplay = MutableStateFlow<TodoItemEntity?>(null);
     val todoItemToDisplay: StateFlow<TodoItemEntity?> = _todoItemToDisplay
 
     init {
-        // TODO: Extract to a separate function.
         val todoItemDao = TodoDatabase.getDatabase(application).todoItemDao()
         repository = TodoRepository(todoItemDao)
     }

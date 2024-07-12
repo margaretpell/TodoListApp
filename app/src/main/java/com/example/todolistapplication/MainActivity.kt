@@ -28,7 +28,6 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = NavRoutes.HOME
                 ) {
-                    // TODO: Can we extract all the routes to a separate file and maintain constants there?
                     // Home Screen
                     composable(NavRoutes.HOME) {
                         val homeScreenViewModel: HomeScreenViewModel by viewModels()

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.todolistapplication.TodoRepository
+import com.example.todolistapplication.TodoRepositoryImpl
 import com.example.todolistapplication.db.TodoDatabase
 import com.example.todolistapplication.db.TodoItemEntity
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +21,13 @@ class HomeScreenViewModel(application: Application) : AndroidViewModel(applicati
 
     init {
         val todoItemDao = TodoDatabase.getDatabase(application).todoItemDao()
-        repository = TodoRepository(todoItemDao)
+        repository = TodoRepositoryImpl(todoItemDao)
         loadAllTodoItems()
     }
 
     private fun loadAllTodoItems(){
         viewModelScope.launch {
-            repository.allTodoItems.collect{ items ->
+            repository.getAllTodoItems().collect{ items ->
                 _allTodoItems.value = items
             }
         }

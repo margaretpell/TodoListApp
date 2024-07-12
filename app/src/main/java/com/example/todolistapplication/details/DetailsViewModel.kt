@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.todolistapplication.TodoRepository
+import com.example.todolistapplication.TodoRepositoryImpl
 import com.example.todolistapplication.db.TodoDatabase
 import com.example.todolistapplication.db.TodoItemEntity
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ class DetailsScreenViewModel(application: Application) : AndroidViewModel(applic
 
     init {
         val todoItemDao = TodoDatabase.getDatabase(application).todoItemDao()
-        repository = TodoRepository(todoItemDao)
+        repository = TodoRepositoryImpl(todoItemDao)
     }
 
     suspend fun loadTodoToDisplay(itemId: String) {

@@ -10,13 +10,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.todolistapplication.TodoRepository
 import com.example.todolistapplication.db.TodoDatabase
 import com.example.todolistapplication.db.TodoItemEntity
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class DetailsScreenViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: TodoRepository
 
     // TODO: Change this to Flows. Hint: SharedFlow
-    val todoItemToDisplay: MutableLiveData<TodoItemEntity> = MutableLiveData()
+    private val _todoItemToDisplay = MutableStateFlow<TodoItemEntity?>(null);
+    val todoItemToDisplay: StateFlow<TodoItemEntity?> = _todoItemToDisplay
 
     init {
         // TODO: Extract to a separate function.
@@ -26,8 +29,8 @@ class DetailsScreenViewModel(application: Application) : AndroidViewModel(applic
 
     suspend fun loadTodoToDisplay(itemId: String) {
         viewModelScope.launch {
-            repository.getItemById(itemId).observeForever { item ->
-                todoItemToDisplay.value = item
+            repository.getItemById(itemId).collect { item ->
+                _todoItemToDisplay.value = item
             }
         }
     }

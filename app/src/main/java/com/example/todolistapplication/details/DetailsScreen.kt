@@ -18,6 +18,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -38,8 +39,9 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     itemId: String? = null,
 ) {
-    val todoItemToDisplay = viewModel.todoItemToDisplay.observeAsState().value
+    val todoItemToDisplay = viewModel.todoItemToDisplay.collectAsState().value
     var localText by remember { mutableStateOf("") }
+
 
     LaunchedEffect(Unit) {
         if(itemId != null) {
